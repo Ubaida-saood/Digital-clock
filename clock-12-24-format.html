@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital clock by using HTML, CSS, and JavaScript</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="hero">
+        <div class="container">
+            <div class="clock">
+                <span id="hrs">00</span> 
+                <span>:</span>
+                <span id="min">00</span>
+                <span>:</span>
+                <span id="sec">00</span>
+
+                <!-- Add a dropdown for selecting time format -->
+                <select id="timeFormat" onchange="updateTimeFormat()">
+                    <option value="24">24-hour</option>
+                    <option value="12">12-hour</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <script>
+        let hrs = document.getElementById('hrs');
+        let min = document.getElementById('min');
+        let sec = document.getElementById('sec');
+        let timeFormatSelect = document.getElementById('timeFormat');
+
+        function updateTimeFormat() {
+            updateClock(); // Update the clock immediately when changing the format
+        }
+
+        function updateClock() {
+            let currentTime = new Date();
+            let hours = currentTime.getHours();
+            let minutes = currentTime.getMinutes();
+            let seconds = currentTime.getSeconds();
+
+            let timeFormat = timeFormatSelect.value;
+
+            if (timeFormat === '12') {
+                hours = (hours % 12) || 12; // Convert to 12-hour format
+            }
+
+            // Pad single-digit hours, minutes, and seconds with leading zeros
+            hrs.innerHTML = (hours < 10 ? '0' : '') + hours;
+            min.innerHTML = (minutes < 10 ? '0' : '') + minutes;
+            sec.innerHTML = (seconds < 10 ? '0' : '') + seconds;
+        }
+
+        // Set the initial time format and update the clock
+        timeFormatSelect.value = '24';
+        updateClock();
+
+        // Update the clock every second
+        setInterval(updateClock, 1000);
+    </script>
+</body>
+</html>
